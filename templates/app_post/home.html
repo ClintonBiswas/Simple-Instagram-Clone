@@ -1,0 +1,56 @@
+{% extends 'navbar.html'%}
+
+{% block title_block%}{% endblock %}
+{% block body_block %}
+{% if search %}
+  {% for user in result %}
+    <div class="row">
+      <div class="col-sm-2">
+        {% if user.user_profile.profile_pic%}
+        <img src="/media/{{user.user_profile.profile_pic}}" width="100px" height="100px" class="round-circle">
+        {% else %}
+        <img src="/media/ddefault.png"width="100px" height="100px" class="round-circle">
+        {% endif %}
+      </div>
+      <div class="col-sm-10">
+        <a href="{% url 'login_app:user_other' username=user.username%}">{{user.username}}</a><br>
+        {{user.user_profile.name}}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+<div class="row">
+  <div class="col-sm-8">
+
+      {% for posting in posts %}
+      <div style="border: 1px solid #888888;">
+        <div style="padding:10px">
+          
+          <a href="{% url 'login_app:user_other' username=posting.author %}">{{posting.author}}</a>
+        </div>
+        <img src="/media/{{posting.image}}" width="100%">
+      </div>
+      <br>
+      <br>
+      {% endfor %}
+
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <div class="col-sm-4">
+        {% if user.user_profile.profile_pic%}
+        <img src="/media/{{user.user_profile.profile_pic}}" width="75px" height="75px" class="round-circle">
+        {% else %}
+        <img src="/media/ddefault.png"width="75px" height="75px" class="round-circle">
+        {% endif %}
+      </div>
+      <div class="col-sm-8">
+        {{user.username}}
+        <br>
+        {{user.user_profile.name}}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

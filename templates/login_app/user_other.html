@@ -1,0 +1,63 @@
+{% extends 'navbar.html'%}
+{% block title_block %}{{user_other.username}}{% endblock%}
+{%block css_block%}
+<style>
+  .crop {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    float: left;
+  }
+
+  .crop img {
+    width: 400px;
+    height: 300px;
+    margin: -75px 0 0 -100px;
+  }
+</style>
+{% endblock%}
+{% load static %}
+{% block body_block%}
+  <div class="row">
+    <div class="col-sm-4">
+      {% if user_other.user_profile.profile_pic%}
+      <img src="/media/{{user.user_profile.profile_pic}}" width="250px" height="250px" class="round-circle">
+      {% else %}
+      <img src="/media/ddefault.png"width="250px" height="250px" class="round-circle">
+      {% endif %}
+
+    </div>
+    <div class="col-sm-8">
+      {% if not already_followed %}
+      <h2>{{user_other.username}}&nbsp;
+        <a href="{% url 'login_app:follow' username=user_other.username %}" class="btn btn-primary">Follow</a>
+      </h2><br>
+      {% else %}
+      <h2>{{user_other.username}}&nbsp;
+        <a href="{% url 'login_app:unfollow' username=user_other.username%}" class="btn btn-primary">Unfollow</a>
+      </h2><br>
+      {% endif %}
+      <h4>{{user_other.post.count}} Posts &nbsp; &nbsp;{{user.follower.count}} follower &nbsp; &nbsp;{{user.following.count}} following</h4><br>
+      <h4>{{user_other.user_profile.name}}</h4>
+      <h4 style="margin-top:15px">{{user_other.user_profile.bio_data}}</h4>
+      <h4 style="margin-top:15px"><a href="{{user.user_profile.social_site}}">Social Link</a></h4>
+    </div>
+
+  </div>
+  <hr>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-12">
+      {% for post in user_other.post.all %}
+      <div class="crop">
+        <img src="/media/{{post.image}}" title="{{post.caption}}">
+      </div>
+
+      {% endfor %}
+    </div>
+
+
+
+  </div>
+{% endblock %}

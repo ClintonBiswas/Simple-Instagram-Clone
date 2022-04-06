@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>{% block title_block%} Social {% endblock %}</title>
+    {% block css_block %}
+
+    {% endblock %}
+  </head>
+  <body>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Instagram</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="{% url 'app_post:home'%}">Home</a></li>
+      <li><a href="{% url 'login_app:logout'%}">Logout</a></li>
+      <form class="navbar-form navbar-left" method="GET">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search" name="search">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+      {% if user.user_profile.profile_pic%}
+      <li><a href="{% url 'login_app:user'%}"><img src="/media/{{user.user_profile.profile_pic}}" width="35px" height="35px" class="round-circle"></a></li>
+      {% else %}
+      <li><a href="{% url 'login_app:user'%}"><img src="/media/ddefault.png"width="35px" height="35px" class="round-circle"></a></li>
+      {% endif %}
+      <!-- <li><a href="#">Page 3</a></li> -->
+
+    </ul>
+  </div>
+</nav>
+    <div class="container" style="padding-top:20px;">
+      {% block body_block %}
+
+      {% endblock %}
+    </div>
+  </body>
+</html>
